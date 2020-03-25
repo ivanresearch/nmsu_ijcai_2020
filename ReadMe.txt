@@ -5,8 +5,8 @@ Due to the limited space of the GitHub repository, we only put the processed dat
 There are 14 datasets used in this paper. Each dataset contains two files: train.txt and test.txt.
 
 1. Prerequirments:
-    The project is writen by Python 2.7. 
-    Following packages are needed to run this project:
+    The project is writen using Python 2.7. 
+    The following packages are required to run this project:
     1.1. tensorflow-gpu-1.15.0
     1.2 scikit-learn 0.22.0
     1.3 numpy 1.17.3
