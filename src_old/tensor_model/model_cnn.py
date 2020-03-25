@@ -21,7 +21,7 @@ from utils.classification_results import class_based_accuracy
 class cnn_model_class:
     data_group = None
 
-    learning_rate = 1e-5
+    learning_rate = 4e-4
     train_x_place = None
     #Here the train_y_place and all other y related places are matrix
     train_y_place = None
@@ -163,7 +163,7 @@ class cnn_model_class:
                 end = start + batch_size
                 epoch = epoch + 1
                 np.random.seed(epoch)
-                if epoch%100 ==0:
+                if epoch % 100 ==0:
                     logger.info("Random Epoch: " + str(epoch) + str(batch_index[0:5]))
                     logger.info(str(epoch) + " epoch trianing time: " + str(train_run_time))
                     epoch_train_time.append(train_run_time)
@@ -240,7 +240,7 @@ class cnn_model_class:
                     #logger.info("accuracy score: " + str(cnn_acc_value))
                     if best_eval_value < valid_eval_value:
                         best_eval_value = valid_eval_value
-                        #save_path = saver.save(cnn_session, best_saver_file)
+                        save_path = saver.save(cnn_session, best_saver_file)
                         #print_str = "Best eval value at current epoch: " + str(best_eval_value) + " saved to "+ save_path
                         print_str = "Best eval value at current epoch: " + str(best_eval_value)
                         logger.info(print_str)
@@ -253,8 +253,8 @@ class cnn_model_class:
                 logger.info("best eval value to break")
                 logger.info(best_eval_value)
                 break
-        #save_path = saver.save(cnn_session, saver_file)
-        #logger.info("Final model saved to " + save_path)
+        save_path = saver.save(cnn_session, saver_file)
+        logger.info("Final model saved to " + save_path)
 
         if valid_x_matrix is not None:
             #valid_eval_value = eval_method_value.eval(feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0})
@@ -272,8 +272,8 @@ class cnn_model_class:
             if best_eval_value < valid_eval_value:
                 best_eval_value = valid_eval_value
             logger.info("Running iteration: %d" % (i))
-            logger.info("final best " + eval_method_key + ": " + str(best_eval_value))
-            logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
+            logger.info("final " + eval_method_key + ": " + str(best_eval_value))
+            #logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
             #valid_eval_value = cnn_session.run(eval_method_value, feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0, is_train_place: False})
             #logger.info("final valid after" + eval_method_key + ": " + str(valid_eval_value))
         logger.info("Epoch training time list: " + str(epoch_train_time))
@@ -376,7 +376,7 @@ def conf_conv_layer(layer, kernel_r, kernel_c, input_matrix, num_input_map, num_
 
     ret_conv_before_act = tf.nn.conv2d(input_matrix, weight_variable, strides=[1, 1, 1, 1], padding=str_padding) + bias_variable
 
-    #ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
+    ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
 
     ret_conv = conf_act(ret_conv_before_act, activation_fun, logger)
     return ret_conv
@@ -618,11 +618,11 @@ def conv_configure(train_x_placeholder, cnn_setting, num_classes, logger=None):
 
     batch_num, f_num, a_num, c_num = last_conv_out.get_shape().as_list()
     logger.info("Conv output" + str(last_conv_out.get_shape()))
-    if f_num > 100:
-        pool_row = f_num/100
-        pool_col = 1
-        last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
-        logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
+    #if f_num > 100:
+    #    pool_row = f_num/100
+    #    pool_col = 1
+    #    last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
+    #    logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
     if attention_type == 0:
         logger.info("Attention applied")
         logger.info("input shape: " + str(last_conv_out.get_shape()))
