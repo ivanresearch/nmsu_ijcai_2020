@@ -1,12 +1,12 @@
-#
 This is the code repository for paper 7636 that we submitted to IJCAI 2020. The paper title is "A new attention mechanism to classify multivariate time series".
 
-Due to the limited space of the GitHub repository, we only put the processed data of two datasets here. The processed data of the other datasets can be downloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT
+Due to the limited space of the GitHub repository, we only put the processed data of two datasets here. The processed data of the other datasets can be downloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT.
 
-There are 14 datasets. Each dataset contains two files: train.txt and test.txt.
+There are 14 datasets used in this paper. Each dataset contains two files: train.txt and test.txt.
 
 1. Prerequirments:
-    The project is writen by Python 2.7. Following packages are needed to run this project
+    The project is writen by Python 2.7. 
+    Following packages are needed to run this project:
     1.1. tensorflow-gpu-1.15.0
     1.2 scikit-learn 0.22.0
     1.3 numpy 1.17.3
@@ -18,7 +18,9 @@ There are 14 datasets. Each dataset contains two files: train.txt and test.txt.
     2.2 Parameters:
         <DATA_NAME>: dataset name. Not case sensitive. 
         14 possible values: act, atn, ara, aus, dsp, eeg, eeg2, ges, har, hts, jvo, net, ohc, ozo.
-        This parameter is also used to identify the parameter file. For example, for "ges" dataset, the parameter file is parameters/all_feature_classification_ges.txt. 
+        This parameter is also used to identify the parameter file.
+        For example, for "ges" dataset, the parameter file is 
+        parameters/all_feature_classification_ges.txt. 
 
         <ATTENTION_TYPE>: the method we can test. 
         4 possible values: -1, 0, 1, 2.
@@ -44,9 +46,10 @@ There are 14 datasets. Each dataset contains two files: train.txt and test.txt.
 
 
 3. Generate the results in Table 3
-    3.1 Rename the parameter cnn_model_parameter_conv1.txt to be cnn_model_parameter.txt.
+    3.1 The results in the previous section are generated using SFCN model with 3 convolutional layers. 
+    To build a SFCN model with only 1 convolutioanl layer, rename the parameter cnn_model_parameter_conv1.txt to be cnn_model_parameter.txt.
         cnn_model_parameter_conv1.txt is the cnn setting parameter file with only one convolutional layer
-    3.2 Re-run the script in 1.1
+    3.2 Re-run the script in 2.1
     3.3 The accuracy, running time results can be found in the log file: 
         For example: 
         # python fcn_ca_main.py ges 0
