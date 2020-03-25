@@ -1,8 +1,7 @@
 #data_keyword
-lstmfcn_auslan
+aus
 #data_folder
-#../../data/dsa/train_test_3_fold/
-../data/lstmfcn_auslan/train_test_1_fold/
+../data/aus
 #attr_num
 22
 #attr_len

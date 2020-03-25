@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_ozone
+ozo
 #data_folder
-../data/lstmfcn_ozone/train_test_1_fold/
+../data/ozo/
 #attr_num
 72
 #attr_len

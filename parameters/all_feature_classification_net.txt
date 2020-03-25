@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_net
+net
 #data_folder
-../data/lstmfcn_net/train_test_1_fold/
+../data/net/
 #attr_num
 4
 #attr_len

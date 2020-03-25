@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_eeg
+eeg
 #data_folder
-../data/lstmfcn_eeg/train_test_1_fold/
+../data/eeg/
 #attr_num
 13
 #attr_len

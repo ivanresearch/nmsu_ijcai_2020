@@ -1,13 +1,13 @@
 #data_keyword
-lstmfcn_act
+atn
 #data_folder
-../data/lstmfcn_act/train_test_1_fold/
+../data/atn/
 #attr_num
 570
 #attr_len
-337
+100
 #num_classes
-16
+20
 #start_class
 0
 #class_column

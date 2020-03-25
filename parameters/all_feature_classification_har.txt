@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_har
+har
 #data_folder
-../data/lstmfcn_har/train_test_1_fold/
+../data/har/
 #attr_num
 9
 #attr_len

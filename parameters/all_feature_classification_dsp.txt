@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_dsa
+dsp
 #data_folder
-../data/lstmfcn_dsa/train_test_1_fold/
+../data/dsp/
 #attr_num
 45
 #attr_len
