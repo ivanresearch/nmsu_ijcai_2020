@@ -618,11 +618,11 @@ def conv_configure(train_x_placeholder, cnn_setting, num_classes, logger=None):
 
     batch_num, f_num, a_num, c_num = last_conv_out.get_shape().as_list()
     logger.info("Conv output" + str(last_conv_out.get_shape()))
-    if f_num > 100:
-        pool_row = f_num/100
-        pool_col = 1
-        last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
-        logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
+    #if f_num > 100:
+    #    pool_row = f_num/100
+    #    pool_col = 1
+    #    last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
+    #    logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
     if attention_type == 0:
         logger.info("Attention applied")
         logger.info("input shape: " + str(last_conv_out.get_shape()))
