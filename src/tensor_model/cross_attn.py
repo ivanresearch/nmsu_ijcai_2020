@@ -19,9 +19,9 @@ def v_attn_layer(x_4d, name, update_collection=None, init=tf.contrib.layers.xavi
             out_chan = 1
         query_conv = sn_conv1x1(x_4d, out_chan, update_collection, init, 'v_attn_query')  # B * T * A * C1
         key_conv = sn_conv1x1(x_4d, out_chan, update_collection, init, 'v_attn_key')  # B * T * A * C1
-        #key_conv = tf.layers.max_pooling2d(inputs=key_conv, pool_size=[2, 1], strides=[2, 1])  # downsampling on the key, reduce overall dimension
+        key_conv = tf.layers.max_pooling2d(inputs=key_conv, pool_size=[2, 1], strides=[2, 1])  # downsampling on the key, reduce overall dimension
         value_conv = sn_conv1x1(x_4d, in_chan // 2, update_collection, init, 'v_attn_value')  # B * T * A * C2
-        #value_conv = tf.layers.max_pooling2d(inputs=value_conv, pool_size=[2, 1], strides=[2, 1])
+        value_conv = tf.layers.max_pooling2d(inputs=value_conv, pool_size=[2, 1], strides=[2, 1])
         #print(x_4d.get_shape())
         #print(query_conv.get_shape())
         #print(key_conv.get_shape())
@@ -48,10 +48,10 @@ def t_attn_layer(x_4d, name, only_before=True, update_collection=None, init=tf.c
         query_conv = tf.transpose(query_conv, perm=[0, 2, 1, 3])  # B * A * T * C1
         key_conv = sn_conv1x1(x_4d, out_chan, update_collection, init, 't_attn_key')  # B * T * A * C1
         key_conv = tf.transpose(key_conv, perm=[0, 2, 1, 3])  # B * A * T * C1
-        #key_conv = tf.layers.max_pooling2d(inputs=key_conv, pool_size=[2, 1], strides=[2, 1])  # downsampling on the key, reduce overall dimension
+        key_conv = tf.layers.max_pooling2d(inputs=key_conv, pool_size=[2, 1], strides=[2, 1])  # downsampling on the key, reduce overall dimension
         value_conv = sn_conv1x1(x_4d, in_chan // 2, update_collection, init, 't_attn_value')  # B * T * A * C2
         value_conv = tf.transpose(value_conv, perm=[0, 2, 1, 3])  # B * A * T * C2
-        #value_conv = tf.layers.max_pooling2d(inputs=value_conv, pool_size=[2, 1], strides=[2, 1])
+        value_conv = tf.layers.max_pooling2d(inputs=value_conv, pool_size=[2, 1], strides=[2, 1])
         #print(x_4d.get_shape())
         #print(query_conv.get_shape())
         #print(key_conv.get_shape())
