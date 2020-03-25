@@ -49,7 +49,6 @@ def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_
     #cnn_setting.attention_type = -1
     #cnn_setting.attention_type = 1  # Using the global attention mechnizm
     #cnn_setting.attention_type = 2  # Using the input attention from https://arxiv.org/pdf/1704.02971.pdf
-    #cnn_setting.attention_type = 3  # Using the input attention from https://arxiv.org/pdf/1704.02971.pdf
     cnn_setting.cross_entropy_type = -1   # 0: apply the class-based cross-entropy
                                           # -1: apply the normal cross-entropy
     #cnn_setting.cross_entropy_type = 0
@@ -104,12 +103,12 @@ def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_
 
         logger.info(data_group.train_x_matrix[0, 0:3, 0:2, 0])
         pred_y_prob, train_run_time, test_run_time, cnn_model = run_cnn(cnn_setting, data_group, saver_file_profix, logger)
-        #pred_y_vector = np.argmax(pred_y_prob, axis=1)
-        #avg_acc, ret_str = averaged_class_based_accuracy(pred_y_vector, data_group.test_y_vector)
-        #acc_value = accuracy_score(data_group.test_y_vector, pred_y_vector, True)
-        #logger.info("Averaged acc: " + str(acc_value))
-        #logger.info(ret_str)
-        #logger.info("Fold eval value: " + str(acc_value))
+        pred_y_vector = np.argmax(pred_y_prob, axis=1)
+        avg_acc, ret_str = averaged_class_based_accuracy(pred_y_vector, data_group.test_y_vector)
+        acc_value = accuracy_score(data_group.test_y_vector, pred_y_vector, True)
+        logger.info("Averaged acc: " + str(acc_value))
+        logger.info(ret_str)
+        logger.info("Fold eval value: " + str(acc_value))
         logger.info(method + ' fold training time (sec):' + str(train_run_time))
         logger.info(method + ' fold testing time (sec):' + str(test_run_time))
         #logger.info("save obj to " + cnn_model.saver_file)

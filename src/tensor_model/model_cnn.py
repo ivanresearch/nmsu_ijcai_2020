@@ -163,7 +163,7 @@ class cnn_model_class:
                 end = start + batch_size
                 epoch = epoch + 1
                 np.random.seed(epoch)
-                if epoch%100 ==0:
+                if epoch % 100 ==0:
                     logger.info("Random Epoch: " + str(epoch) + str(batch_index[0:5]))
                     logger.info(str(epoch) + " epoch trianing time: " + str(train_run_time))
                     epoch_train_time.append(train_run_time)
@@ -240,7 +240,7 @@ class cnn_model_class:
                     #logger.info("accuracy score: " + str(cnn_acc_value))
                     if best_eval_value < valid_eval_value:
                         best_eval_value = valid_eval_value
-                        #save_path = saver.save(cnn_session, best_saver_file)
+                        save_path = saver.save(cnn_session, best_saver_file)
                         #print_str = "Best eval value at current epoch: " + str(best_eval_value) + " saved to "+ save_path
                         print_str = "Best eval value at current epoch: " + str(best_eval_value)
                         logger.info(print_str)
@@ -253,8 +253,8 @@ class cnn_model_class:
                 logger.info("best eval value to break")
                 logger.info(best_eval_value)
                 break
-        #save_path = saver.save(cnn_session, saver_file)
-        #logger.info("Final model saved to " + save_path)
+        save_path = saver.save(cnn_session, saver_file)
+        logger.info("Final model saved to " + save_path)
 
         if valid_x_matrix is not None:
             #valid_eval_value = eval_method_value.eval(feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0})
@@ -272,8 +272,8 @@ class cnn_model_class:
             if best_eval_value < valid_eval_value:
                 best_eval_value = valid_eval_value
             logger.info("Running iteration: %d" % (i))
-            logger.info("final best " + eval_method_key + ": " + str(best_eval_value))
-            logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
+            logger.info("final " + eval_method_key + ": " + str(best_eval_value))
+            #logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
             #valid_eval_value = cnn_session.run(eval_method_value, feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0, is_train_place: False})
             #logger.info("final valid after" + eval_method_key + ": " + str(valid_eval_value))
         logger.info("Epoch training time list: " + str(epoch_train_time))
