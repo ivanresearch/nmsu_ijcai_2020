@@ -30,7 +30,7 @@ class cnn_parameters:
     # conv_kernel_list: [[r1, c1], [r2, c2], [r3, c3]]: means first convolutional kernel is c1 = r1 * c1
     # pool_rate_list: [[r1, c1], [r2, c2], [r3, c3]]: means first pooling kernel is r1 * c1
     # feature_num_list: [a, b], means after c1, there are a numbers of feature maps. b feature maps after c2
-    def __init__(self, conv_kernel_list, pool_rate_list, feature_num_list, batch_size=100, max_iter=900, stop_threshold=0.9, activation_fun=0, std_value=0, same_size=False, feature_method='vote', eval_method='accuracy', out_obj_folder='./', out_model_folder='./', group_list = [], input_map=1, full_feature_num=-1, l2_bool=False, keep_prob=0.5):
+    def __init__(self, conv_kernel_list, pool_rate_list, feature_num_list, batch_size=100, max_iter=900, stop_threshold=0.9, activation_fun=0, std_value=0, same_size=False, feature_method='vote', eval_method='accuracy', out_obj_folder='./', out_model_folder='./', group_list = [], input_map=1, full_feature_num=400, l2_bool=False, keep_prob=0.5):
         self.conv_kernel_list = conv_kernel_list
         self.pool_rate_list = pool_rate_list
         self.feature_num_list = feature_num_list
