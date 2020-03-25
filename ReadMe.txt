@@ -1,45 +1,37 @@
-# 
-The code for Paper 7636 in IJCAI2020
-This is the code repository for paper: A new attention mechanism to classify multivariate time series
+#
+This is the code repository for paper 7636 that we submitted to IJCAI 2020. The paper title is "A new attention mechanism to classify multivariate time series"
 
-Data link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT
+Due to the limited space of github repository, we only put the processed data of two datasets here. The processed data of the other datasets can be doanloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT
 
-Due to the limited data for preparing this GitHub repository, some datasets are uploading.
+There are 14 datasets.
+Each dataset contains two files: train.txt and test.txt.
 
-Running Example using the toy dataset:
-For example, the dataset name is "toy" and there are two data files under data/toy folder: train_0.txt and test_0.txt
-1. Run Stablized Fully-Convolutional Network with Cross Attention (SFCN-CA)
+
+Example of running the code using the Ges dataset:
+1. Run Stablized Fully-Convolutional Network approaches with different attention mechanisms
     1.1 Script:
-    # python fcn_ca_main.py 0
+    # python fcn_ca_main.py <DATA_NAME> <ATTENTION_TYPE>
 
-    1.2 Outputs:
+    1.2 Parameters:
+    <DATA_NAME>: "Ges" is the name of Ges dataset. It means CA-SFCN runs on Ges datasets. The program identifies the parameter file: parameters/all_feature_classification_ges.txt
+    <ATTENTION_TYPE>: 0 means run the Cross-Attention Stablized Fully-Convolutional Network (CA-SFCN)
+
+
+    1.3 List of all parameter values
+    <DATA_NAME>: "Ges" for Ges Dataset
+    <DATA_NAME>: "eeg" for Eeg Dataset
+    <DATA_NAME>: "eegs" for Eegs Dataset
+    <ATTENTION_TYPE>: 0 means run the Cross-Attention Stablized Fully-Convolutional Network (CA-SFCN)
+    <ATTENTION_TYPE>: -1 means run the stablized Fully-Convolutional Network (CA-SFCN) without any attention mechanism
+    <ATTENTION_TYPE>: 1 means run the Global-Attention Stablized Fully-Convolutional Network (GA-SFCN)
+    <ATTENTION_TYPE>: 2 means run the Recurrent-Attention Stablized Fully-Convolutional Network (RA-SFCN)
+
+    1.4 Outputs:
     The training log file locates at log/<DATASET_NAME>/fcn_classification/
-    The trained model locates on object/<DATASET_NAME>/fcn_classification/
+    In this example: 
+    # python fcn_ca_main.py Ges 0
+    The output log file is log/ges/fcn_classification/eeg_train_0_fcn_classification_act3_acc_attention0_conv3.log_<TIME_STAMP>.log
 
-
-2. Run Stablized Fully-Convolutional Network without any attention (SFCN)
-    2.1 Script:
-    # python fcn_ca_main.py -1
-
-    2.2 Outputs:
-    The training log file locates at log/<DATASET_NAME>/fcn_classification/
-    The trained model locates on object/<DATASET_NAME>/fcn_classification/
-
-
-3. Run Stablized Fully-Convolutional Network with Global Attention (SFCN-GA)
-    3.1 Script:
-    # python fcn_ca_main.py 1
-
-    3.2 Outputs:
-    The training log file locates at log/<DATASET_NAME>/fcn_classification/
-    The trained model locates on object/<DATASET_NAME>/fcn_classification/
-
-
-4. Run Stablized Fully-Convolutional Network with Recurrent Attention (SFCN-RA)
-    4.1 Script:
-    # python fcn_ca_main.py 2
-
-    4.2 Outputs:
-    The training log file locates at log/<DATASET_NAME>/fcn_classification/
-    The trained model locates on object/<DATASET_NAME>/fcn_classification/
-
+    The testing accuracy, training time and testing time can be found at the last three column of the output log file.
+    The testing accuracies are used for the last four columns of Table 2 in the paper.
+    The running time information is used for the results in Figure 3.
