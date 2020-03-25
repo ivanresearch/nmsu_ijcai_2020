@@ -41,13 +41,14 @@ There are 14 datasets used in this paper. Each dataset contains two files: train
 
         The testing accuracy, training time, and testing time can be found at the last three rows of the output log file.
 
-        The testing accuracies are reported in the last four columns of Table 2 in the paper. The other columns in Table 2 are directly copied from [Karim et al., 2019].
+        The testing accuracies are reported in the last four columns of Table 2 in the paper. 
+        The other columns in Table 2 are directly copied from [Karim et al., 2019].
         The running time information is reported in Figure 3. 
 
 
 3. Generate the results in Table 3
     3.1 The results in the previous section are generated using SFCN model with 3 convolutional layers. 
-    To build a SFCN model with only 1 convolutioanl layer, rename the parameter cnn_model_parameter_conv1.txt to be cnn_model_parameter.txt.
+        To build a SFCN model with only 1 convolutioanl layer, rename the parameter cnn_model_parameter_conv1.txt to be cnn_model_parameter.txt.
         cnn_model_parameter_conv1.txt is the cnn setting parameter file with only one convolutional layer
     3.2 Re-run the script in 2.1
     3.3 The accuracy, running time results can be found in the log file: 
