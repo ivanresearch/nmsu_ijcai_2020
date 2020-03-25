@@ -1,7 +1,7 @@
 #data_keyword
-lstmfcn_ges
+ges
 #data_folder
-../data/lstmfcn_ges/train_test_1_fold/
+../data/ges/
 #attr_num
 18
 #attr_len
