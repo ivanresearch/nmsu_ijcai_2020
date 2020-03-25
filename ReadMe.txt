@@ -8,7 +8,7 @@ Each dataset contains two files: train.txt and test.txt.
 
 
 Example of running the code using the Ges dataset:
-1. Run Stablized Fully-Convolutional Network approaches with different attention mechanisms
+1. Generation the results in Table 2 and Figure 3
     1.1 Script:
     # python fcn_ca_main.py <DATA_NAME> <ATTENTION_TYPE>
 
@@ -30,8 +30,22 @@ Example of running the code using the Ges dataset:
     The training log file locates at log/<DATASET_NAME>/fcn_classification/
     In this example: 
     # python fcn_ca_main.py Ges 0
-    The output log file is log/ges/fcn_classification/eeg_train_0_fcn_classification_act3_acc_attention0_conv3.log_<TIME_STAMP>.log
+    The output log file is
+    log/ges/fcn_classification/eeg_train_0_fcn_classification_act3_acc_attention0_conv3.log_<TIME_STAMP>.log
 
     The testing accuracy, training time and testing time can be found at the last three column of the output log file.
-    The testing accuracies are used for the last four columns of Table 2 in the paper.
+    The testing accuracies are used for the last four columns of Table 2 in the paper. The other columns in Table 2 are directly copied from [Karim et al., 2019].
     The running time information is used for the results in Figure 3.
+
+
+2. Generation the results in Table 3
+    2.1 Rename the parameter cnn_model_parameter_conv1.txt to be cnn_model_parameter.txt.
+    cnn_model_parameter_conv1.txt is the cnn setting parameter file with only one convolutional layer
+    2.2 Re-run the script in 1.1
+    2.3 The accuracy, running time results can be found in the log file: 
+    In this example: 
+    # python fcn_ca_main.py Ges 0
+    The output log file is
+    log/ges/fcn_classification/eeg_train_0_fcn_classification_act3_acc_attention0_conv1.log_<TIME_STAMP>.log
+    2.4 Similar setting for the cnn with 5 convolutional layers using cnn_model_parameter_conv5.txt
+    
