@@ -248,8 +248,6 @@ class cnn_model_class:
             end = end + batch_size
             if epoch > max_iter:
                 logger.info("validation eval value at epoch: " + str(epoch))
-                logger.info("validation eval value to break")
-                logger.info(best_eval_value)
                 break
 
         if valid_x_matrix is not None:
