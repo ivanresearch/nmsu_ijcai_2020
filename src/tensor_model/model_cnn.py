@@ -516,7 +516,7 @@ def conf_pool_layer(input_matrix, row_d_samp_rate, col_samp_rate, same_size=Fals
 
 def conf_out_layer(layer, input_x_matrix, num_features, num_classes, std_value=0.02):
     output_weight = tf.Variable(tf.truncated_normal([num_features, num_classes], stddev=std_value, seed=layer), name="out_w")
-    output_bias = tf.Variable(tf.constant(std_value, shape=[num_classes]), name="out_b")
+    output_bias = tf.Variable(tf.constant(0.0, shape=[num_classes]), name="out_b")
     # This is the logits used in the cross entropy. The predict_y_prab should be tf.nn.softmax(logits_out) or sigmoid(logits_out)
     logits_out = tf.matmul(input_x_matrix, output_weight) + output_bias
     return logits_out
@@ -663,7 +663,7 @@ def out_configure(layer, last_conv_out, num_classes, dropout_place, full_feature
         weight_fullconn = tf.Variable(tf.truncated_normal([second_feature_num, full_feature_num], stddev=std_value, seed=layer), name="out_full_w")
         logger.info("full conn weight shape")
         logger.info(weight_fullconn.get_shape())
-        bias_fullconn = tf.Variable(tf.constant(std_value, shape=[full_feature_num]), name="out_full_b")
+        bias_fullconn = tf.Variable(tf.constant(0.0, shape=[full_feature_num]), name="out_full_b")
     
         output_fullconn_no_act = tf.matmul(last_conv_out, weight_fullconn) + bias_fullconn
         output_fullconn = tf.nn.relu(output_fullconn_no_act)
