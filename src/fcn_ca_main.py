@@ -13,9 +13,9 @@ from utils.classification_results import averaged_class_based_accuracy
 
 import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"]="-1"
-#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-#os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+#os.environ["CUDA_VISIBLE_DEVICES"]="-1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 
 
@@ -103,13 +103,13 @@ def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_
             logger.info('train label shape: ' + str(data_group.train_y_vector.shape))
 
         logger.info(data_group.train_x_matrix[0, 0:3, 0:2, 0])
-        pred_y_prob, train_run_time, test_run_time, cnn_model = run_cnn(cnn_setting, data_group, saver_file_profix, logger)
+        eval_value, train_run_time, test_run_time, cnn_model = run_cnn(cnn_setting, data_group, saver_file_profix, logger)
         #pred_y_vector = np.argmax(pred_y_prob, axis=1)
         #avg_acc, ret_str = averaged_class_based_accuracy(pred_y_vector, data_group.test_y_vector)
         #acc_value = accuracy_score(data_group.test_y_vector, pred_y_vector, True)
         #logger.info("Averaged acc: " + str(acc_value))
         #logger.info(ret_str)
-        #logger.info("Fold eval value: " + str(acc_value))
+        logger.info("Fold accuracy: " + str(eval_value))
         logger.info(method + ' fold training time (sec):' + str(train_run_time))
         logger.info(method + ' fold testing time (sec):' + str(test_run_time))
         #logger.info("save obj to " + cnn_model.saver_file)
@@ -118,16 +118,19 @@ def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_
 if __name__ == '__main__':
     argv_array = sys.argv
     run_stdout = sys.stdout
-    file_keyword = 'train_'
+    file_keyword = 'train'
     projected = True
     len_argv_array = len(argv_array)
-    if len_argv_array > 1:
+    if len_argv_array == 3:
         try:
-            val = int(argv_array[1])
-            file_keyword = file_keyword + argv_array[1]
+            data_key = argv_array[1]
+            attention_type = int(argv_array[2])
         except ValueError:
             print("That's not an int!")
-
-    parameter_file = '../parameters/all_feature_classification.txt'
-    cnn_classification_main(parameter_file, file_keyword)
-    #
+    else:
+        raise Exception("Unkonwn parameter detected! Please follow the format #python fcn_ca_main.py <DATA_NAME> <ATTENTION_TYPE>")
+    print("dataset: " + data_key)
+    print("attention type: " + str(attention_type))
+    parameter_file = '../parameters/all_feature_classification.txt_' + data_key.lower()
+    print(parameter_file)
+    cnn_classification_main(parameter_file, file_keyword, attention_type)
