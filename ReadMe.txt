@@ -1,6 +1,6 @@
 This is the code repository for paper 7636 that we submitted to IJCAI 2020. The paper title is "A new attention mechanism to classify multivariate time series".
 
-Due to the limited space of the GitHub repository, we only put the processed data of two datasets here. The processed data of the other datasets can be downloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT.
+Due to the limited space of the GitHub repository, we only put the processed data of five datasets here. The processed data of the other datasets can be downloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT.
 
 There are 14 datasets used in this paper. Each dataset contains two files: train.txt and test.txt.
 
@@ -29,13 +29,12 @@ There are 14 datasets used in this paper. Each dataset contains two files: train
         1 means GA-SFCN (Global-Attention Stablized Fully-Convolutional Network)
         2 means RA-SFCN (Recurrent-Attention Stablized Fully-Convolutional Network)
 
-        For example, the command python fcn_ca_main.py ges 0
-        Runs CA-SFCN method on ges Dataset.
+        For example, the command "python fcn_ca_main.py ges 0"
+        runs CA-SFCN method on ges Dataset.
 
     2.3 Outputs:
-        The log file of the training stage file locates at log/<DATASET_NAME>/fcn_classification/
-        For example, 
-        # python fcn_ca_main.py ges 0
+        The log file of the training stage locates at log/<DATASET_NAME>/fcn_classification/
+        For example, the command "python fcn_ca_main.py ges 0"
         The output log file is
             log/ges/fcn_classification/ges_train_fcn_classification_act3_acc_attention0_conv3.log_<TIME_STAMP>.log
 
@@ -53,8 +52,7 @@ There are 14 datasets used in this paper. Each dataset contains two files: train
         cnn_model_parameter_conv1.txt is the cnn setting parameter file with only one convolutional layer
     3.2 Re-run the script in 2.1
     3.3 The accuracy, running time results can be found in the log file: 
-        For example: 
-        # python fcn_ca_main.py ges 0
+        For example, the command "python fcn_ca_main.py ges 0"
         The output log file is
         log/ges/fcn_classification/eeg_train_0_fcn_classification_act3_acc_attention0_conv1.log_<TIME_STAMP>.log
     3.4 Similar setting for the cnn with 5 convolutional layers using cnn_model_parameter_conv5.txt
