@@ -370,7 +370,7 @@ def conf_conv_layer(layer, kernel_r, kernel_c, input_matrix, num_input_map, num_
 
     ret_conv_before_act = tf.nn.conv2d(input_matrix, weight_variable, strides=[1, 1, 1, 1], padding=str_padding) + bias_variable
 
-    ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
+    #ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
 
     ret_conv = conf_act(ret_conv_before_act, activation_fun, logger)
     return ret_conv
