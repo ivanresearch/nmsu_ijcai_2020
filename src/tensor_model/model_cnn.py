@@ -637,6 +637,7 @@ def conv_configure(train_x_placeholder, cnn_setting, num_classes, logger=None):
         logger.info("Global Attention output" + str(last_conv_out.get_shape()))
     elif attention_type == 2:
         logger.info("Input Attention applied")
+        all_f_num = f_num * a_num
         sample_rate = int(all_f_num/2000)
         if sample_rate > 0:
             last_conv_out = tf.layers.max_pooling2d(inputs=last_conv_out, pool_size=[sample_rate, 1], strides=[sample_rate, 1])
