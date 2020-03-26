@@ -63,11 +63,11 @@ class cnn_model_class:
 
         last_conv_out, saver_file, layer, self.is_train_place, self.attn_list = conv_configure(self.train_x_place, cnn_setting, num_classes, logger)
 
-        #batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
-        #pool_row = f_num
-        #pool_col = 1
-        #print(last_conv_out.get_shape())
-        #last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col)
+        batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
+        pool_row = f_num
+        pool_col = 1
+        print(last_conv_out.get_shape())
+        last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col)
         batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
         #print(last_conv_out.get_shape())
         self.saver_file = self.saver_file + saver_file
@@ -514,7 +514,7 @@ def conf_pool_layer(input_matrix, row_d_samp_rate, col_samp_rate, same_size=Fals
     return tf.nn.max_pool(input_matrix, ksize=[1, row_d_samp_rate, col_samp_rate, 1], strides=[1, row_d_samp_rate, col_samp_rate, 1], padding=str_padding)
 
 
-def conf_out_layer_1(layer, input_x_matrix, num_features, num_classes, std_value=0.02):
+def conf_out_layer(layer, input_x_matrix, num_features, num_classes, std_value=0.02):
     output_weight = tf.Variable(tf.truncated_normal([num_features, num_classes], stddev=std_value, seed=layer), name="out_w")
     output_bias = tf.Variable(tf.constant(std_value, shape=[num_classes]), name="out_b")
     # This is the logits used in the cross entropy. The predict_y_prab should be tf.nn.softmax(logits_out) or sigmoid(logits_out)
@@ -522,7 +522,7 @@ def conf_out_layer_1(layer, input_x_matrix, num_features, num_classes, std_value
     return logits_out
 
 
-def conf_out_layer(layer, input_x_matrix, num_features, num_classes, std_value=0.02, update_collection=None, attention_type=-1):
+def conf_out_layer_1(layer, input_x_matrix, num_features, num_classes, std_value=0.02, update_collection=None, attention_type=-1):
     # print(input_x_matrix.get_shape())
     #if attention_type == 0:
     #    last_conv_out, v_attn = v_attn_layer(input_x_matrix, "final_attn_layer")
