@@ -63,11 +63,11 @@ class cnn_model_class:
 
         last_conv_out, saver_file, layer, self.is_train_place, self.attn_list = conv_configure(self.train_x_place, cnn_setting, num_classes, logger)
 
-        batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
-        pool_row = f_num
-        pool_col = 1
+        #batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
+        #pool_row = f_num
+        #pool_col = 1
         #print(last_conv_out.get_shape())
-        last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col)
+        #last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col)
         batch_size, f_num, v_num, c_num = last_conv_out.get_shape().as_list()
         #print(last_conv_out.get_shape())
         self.saver_file = self.saver_file + saver_file
@@ -362,7 +362,7 @@ def conf_conv_layer(layer, kernel_r, kernel_c, input_matrix, num_input_map, num_
     
     
     #bias_variable = tf.get_variable('conv_b_'+str(layer), [num_output_map], initializer=tf.zeros_initializer())
-    bias_variable = tf.Variable(tf.constant(std_value, shape=[num_output_map]), name='conv_b_'+str(layer))
+    bias_variable = tf.Variable(tf.constant(0.0, shape=[num_output_map]), name='conv_b_'+str(layer))
     if same_size == "True":
         str_padding = 'SAME'
     else:
