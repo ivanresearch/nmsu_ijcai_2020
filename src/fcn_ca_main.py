@@ -131,6 +131,6 @@ if __name__ == '__main__':
         raise Exception("Unkonwn parameter detected! Please follow the format #python fcn_ca_main.py <DATA_NAME> <ATTENTION_TYPE>")
     print("dataset: " + data_key)
     print("attention type: " + str(attention_type))
-    parameter_file = '../parameters/all_feature_classification.txt_' + data_key.lower()
+    parameter_file = '../parameters/all_feature_classification_' + data_key.lower() + ".txt"
     print(parameter_file)
     cnn_classification_main(parameter_file, file_keyword, attention_type)
