@@ -242,15 +242,15 @@ class cnn_model_class:
                         best_eval_value = valid_eval_value
                         #save_path = saver.save(cnn_session, best_saver_file)
                         #print_str = "Best eval value at current epoch: " + str(best_eval_value) + " saved to "+ save_path
-                        print_str = "Best eval value at current epoch: " + str(best_eval_value)
+                        print_str = "validation eval value at current epoch: " + str(best_eval_value)
                         logger.info(print_str)
         
             i = i + 1
             start = end
             end = end + batch_size
             if epoch > max_iter:
-                logger.info("best eval value at epoch: " + str(epoch))
-                logger.info("best eval value to break")
+                logger.info("validation eval value at epoch: " + str(epoch))
+                logger.info("validation eval value to break")
                 logger.info(best_eval_value)
                 break
         #save_path = saver.save(cnn_session, saver_file)
@@ -272,8 +272,8 @@ class cnn_model_class:
             if best_eval_value < valid_eval_value:
                 best_eval_value = valid_eval_value
             logger.info("Running iteration: %d" % (i))
-            logger.info("final best " + eval_method_key + ": " + str(best_eval_value))
-            logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
+            #logger.info("final best " + eval_method_key + ": " + str(best_eval_value))
+            #logger.info("final valid before" + eval_method_key + ": " + str(valid_eval_value))
             #valid_eval_value = cnn_session.run(eval_method_value, feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0, is_train_place: False})
             #logger.info("final valid after" + eval_method_key + ": " + str(valid_eval_value))
         logger.info("Epoch training time list: " + str(epoch_train_time))
@@ -295,10 +295,11 @@ class cnn_model_class:
 
     def cnn_pred_main(self, eval_method_value):
         test_x_matrix = self.data_group.test_x_matrix
+        test_y_matrix = self.data_group.test_y_matrix
         if test_x_matrix is None:
             return False
         start_time = time.time()
-        eval_value = self.cnn_session.run(eval_method_value, feed_dict={self.train_x_place: test_x_matrix, self.dropout_place: 1.0, self.is_train_place: False})
+        eval_value = self.cnn_session.run(eval_method_value, feed_dict={self.train_x_place: test_x_matrix, self.train_y_place: test_y_matrix, self.dropout_place: 1.0, self.is_train_place: False})
         test_run_time = time.time() - start_time
         return eval_value, test_run_time
 
