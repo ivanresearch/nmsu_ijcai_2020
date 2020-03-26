@@ -353,16 +353,16 @@ def conf_act(input_conv, activation_fun=0, logger=None):
 
 def conf_conv_layer(layer, kernel_r, kernel_c, input_matrix, num_input_map, num_output_map, is_train, activation_fun=0, strides_list=[1, 1, 1, 1], std_value=0.02, same_size=False, logger=None):
     #with tf.variable_scope("conv"):
-    #weight_variable = tf.Variable(tf.truncated_normal([kernel_r, kernel_c, num_input_map, num_output_map], stddev=std_value, seed=layer), name='conv_w_'+str(layer))
+    weight_variable = tf.Variable(tf.truncated_normal([kernel_r, kernel_c, num_input_map, num_output_map], stddev=std_value, seed=layer), name='conv_w_'+str(layer))
 
-    weight_variable = tf.get_variable('conv_w_'+str(layer), [kernel_r, kernel_c, num_input_map, num_output_map], initializer=tf.contrib.layers.xavier_initializer())
-    sn_iters = 1
-    update_collection = None
-    weight_variable = spectral_normed_weight(weight_variable, num_iters=sn_iters, update_collection=update_collection, name='conv_w_'+str(layer))
+    #weight_variable = tf.get_variable('conv_w_'+str(layer), [kernel_r, kernel_c, num_input_map, num_output_map], initializer=tf.contrib.layers.xavier_initializer())
+    #sn_iters = 1
+    #update_collection = None
+    #weight_variable = spectral_normed_weight(weight_variable, num_iters=sn_iters, update_collection=update_collection, name='conv_w_'+str(layer))
     
     
-    bias_variable = tf.get_variable('conv_b_'+str(layer), [num_output_map], initializer=tf.zeros_initializer())
-    #bias_variable = tf.Variable(tf.constant(std_value, shape=[num_output_map]), name='conv_b_'+str(layer))
+    #bias_variable = tf.get_variable('conv_b_'+str(layer), [num_output_map], initializer=tf.zeros_initializer())
+    bias_variable = tf.Variable(tf.constant(std_value, shape=[num_output_map]), name='conv_b_'+str(layer))
     if same_size == "True":
         str_padding = 'SAME'
     else:
@@ -370,7 +370,7 @@ def conf_conv_layer(layer, kernel_r, kernel_c, input_matrix, num_input_map, num_
 
     ret_conv_before_act = tf.nn.conv2d(input_matrix, weight_variable, strides=[1, 1, 1, 1], padding=str_padding) + bias_variable
 
-    #ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
+    ret_conv_before_act = tf.contrib.layers.batch_norm(ret_conv_before_act, center=True, scale=True, is_training=is_train, scope='bn' +str(layer))
 
     ret_conv = conf_act(ret_conv_before_act, activation_fun, logger)
     return ret_conv
