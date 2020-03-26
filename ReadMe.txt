@@ -1,13 +1,14 @@
 This is the code repository for paper 7636 that we submitted to IJCAI 2020. The paper title is "A new attention mechanism to classify multivariate time series".
 
-Due to the limited space of the GitHub repository, we only put the processed data of five datasets here. The processed data of the other datasets can be downloaded from google drive link: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT.
+This paper uses 14 datasets. Each dataset contains two files: train.txt and test.txt.
 
-There are 14 datasets used in this paper. Each dataset contains two files: train.txt and test.txt.
+For the 7 smaller datasets (file size is less than the GitHub limit, 100M), we directly put the processed data of these datasets in the data folder. 
+For the 7 larger datasets (whose size is larger than the GitHub limit, 100M), we put the processed data of these datasets at google drive. These files can be downloaded from: https://drive.google.com/open?id=1eMLQIjDCvMIBs_BHDZAmb37MnlywxgyT
 
 1. Prerequirments:
     The project is writen using Python 2.7. 
     The following packages are required to run this project:
-    1.1. tensorflow-gpu-1.15.0
+    1.1 tensorflow-gpu-1.15.0
     1.2 scikit-learn 0.22.0
     1.3 numpy 1.17.3
 
