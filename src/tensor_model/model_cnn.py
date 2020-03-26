@@ -111,7 +111,6 @@ class cnn_model_class:
         train_y_vector = self.data_group.train_y_vector
         valid_x_matrix = self.data_group.valid_x_matrix
         valid_y_matrix = self.data_group.valid_y_matrix
-        #valid_y_vector = self.data_group.valid_y_vector
 
         train_x_place = self.train_x_place
         train_y_place = self.train_y_place
@@ -240,8 +239,7 @@ class cnn_model_class:
                     #logger.info("accuracy score: " + str(cnn_acc_value))
                     if best_eval_value < valid_eval_value:
                         best_eval_value = valid_eval_value
-                        #save_path = saver.save(cnn_session, best_saver_file)
-                        #print_str = "Best eval value at current epoch: " + str(best_eval_value) + " saved to "+ save_path
+                        save_path = saver.save(cnn_session, best_saver_file)
                         print_str = "validation eval value at current epoch: " + str(best_eval_value)
                         logger.info(print_str)
         
@@ -253,22 +251,19 @@ class cnn_model_class:
                 logger.info("validation eval value to break")
                 logger.info(best_eval_value)
                 break
-        #save_path = saver.save(cnn_session, saver_file)
-        #logger.info("Final model saved to " + save_path)
 
         if valid_x_matrix is not None:
             #valid_eval_value = eval_method_value.eval(feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0})
             valid_eval_value = cnn_session.run(eval_method_value, feed_dict={train_x_place: valid_x_matrix, train_y_place: valid_y_matrix, dropout_place: 1.0, is_train_place: False})
-            #if valid_eval_value < best_eval_value:
-            #    cnn_session.close()
-            #    cnn_session = tf.Session(config=self.config)
-            #    saver.restore(cnn_session, best_saver_file)
-                #self.cnn_session = cnn_session
-            #else:
-            #    best_eval_value = valid_eval_value
-            #    save_path = saver.save(cnn_session, best_saver_file)
-            #    print_str = "Best session saved to "+ save_path
-            #    logger.info(print_str)
+            if valid_eval_value < best_eval_value:
+                cnn_session.close()
+                cnn_session = tf.Session(config=self.config)
+                saver.restore(cnn_session, best_saver_file)
+                self.cnn_session = cnn_session
+            else:
+                best_eval_value = valid_eval_value
+                save_path = saver.save(cnn_session, best_saver_file)
+                logger.info(print_str)
             if best_eval_value < valid_eval_value:
                 best_eval_value = valid_eval_value
             logger.info("Running iteration: %d" % (i))
@@ -635,18 +630,18 @@ def conv_configure(train_x_placeholder, cnn_setting, num_classes, logger=None):
         logger.info("Attention output" + str(last_conv_out.get_shape()))
     elif attention_type == 1:
         logger.info("Global Attention applied")
-        #all_f_num = f_num * a_num
-        #sample_rate = int(all_f_num/2000)
-        #if sample_rate > 0:
-        #    last_conv_out = tf.layers.max_pooling2d(inputs=last_conv_out, pool_size=[sample_rate, 1], strides=[sample_rate, 1])
+        all_f_num = f_num * a_num
+        sample_rate = int(all_f_num/2000)
+        if sample_rate > 0:
+            last_conv_out = tf.layers.max_pooling2d(inputs=last_conv_out, pool_size=[sample_rate, 1], strides=[sample_rate, 1])
         #with tf.device("/cpu:0"):
         last_conv_out, global_attn = global_attn_layer(last_conv_out, "global_attn_layer")
         logger.info("Global Attention output" + str(last_conv_out.get_shape()))
     elif attention_type == 2:
         logger.info("Input Attention applied")
-        #sample_rate = int(all_f_num/2000)
-        #if sample_rate > 0:
-        #    last_conv_out = tf.layers.max_pooling2d(inputs=last_conv_out, pool_size=[sample_rate, 1], strides=[sample_rate, 1])
+        sample_rate = int(all_f_num/2000)
+        if sample_rate > 0:
+            last_conv_out = tf.layers.max_pooling2d(inputs=last_conv_out, pool_size=[sample_rate, 1], strides=[sample_rate, 1])
         last_conv_out = input_attn_layer(last_conv_out, "input_attn_layer")
         logger.info("Global Attention output" + str(last_conv_out.get_shape()))
     elif attention_type == 3:
@@ -723,9 +718,8 @@ def load_model(model_saved_file, data_stru, cnn_setting, logger=None):
 
 
 
-def load_model_predict(cnn_session, test_x_matrix, logits_out,train_x_placeholder, keep_prob_placeholder, is_train_place):
-    cnn_predict_proba = cnn_session.run(logits_out, feed_dict={
-                                        train_x_placeholder: test_x_matrix, keep_prob_placeholder: 1.0, is_train_place: False})
+def load_model_predict(cnn_session, test_x_matrix, logits_out, train_x_placeholder, keep_prob_placeholder, is_train_place):
+    cnn_predict_proba = cnn_session.run(logits_out, feed_dict={train_x_placeholder: test_x_matrix, keep_prob_placeholder: 1.0, is_train_place: False})
     return cnn_predict_proba
 
 ## End of CNN load and predict
@@ -772,7 +766,7 @@ def main_test():
     pred_y_prob, train_run_time, test_run_time, cnn_model = run_cnn(cnn_setting, data_group, "./", None)
 
     last_conv_out = cnn_model.keeped_feature_list[0]
-    train_last_conv = cnn_model.cnn_session.run(last_conv_out, feed_dict={cnn_model.train_x_place: data_group.train_x_matrix, cnn_model.dropout_place: 1.0, cnn.model.is_train_place: False})
+    train_last_conv = cnn_model.cnn_session.run(last_conv_out, feed_dict={cnn_model.train_x_place: data_group.train_x_matrix, cnn_model.dropout_place: 1.0, cnn_model.is_train_place: False})
     print(train_last_conv.shape)
     #print(pred_y_prob)
 
