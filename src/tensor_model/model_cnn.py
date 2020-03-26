@@ -21,7 +21,7 @@ from utils.classification_results import class_based_accuracy
 class cnn_model_class:
     data_group = None
 
-    learning_rate = 1e-5
+    learning_rate = 4e-4
     train_x_place = None
     #Here the train_y_place and all other y related places are matrix
     train_y_place = None
@@ -163,7 +163,7 @@ class cnn_model_class:
                 end = start + batch_size
                 epoch = epoch + 1
                 np.random.seed(epoch)
-                if epoch%100 ==0:
+                if epoch % 100 ==0:
                     logger.info("Random Epoch: " + str(epoch) + str(batch_index[0:5]))
                     logger.info(str(epoch) + " epoch trianing time: " + str(train_run_time))
                     epoch_train_time.append(train_run_time)
@@ -291,16 +291,16 @@ class cnn_model_class:
         # Even without any data, this class still can get here and create the graph without training
         # After here, the training requires at least both the train_x_matrix and train_y_vector
         # Reutrn the training time
-        return self.cnn_training(eval_method_value, eval_method_key)
+        return self.cnn_training(eval_method_value, eval_method_key), eval_method_value
 
-    def cnn_pred_main(self):
+    def cnn_pred_main(self, eval_method_value):
         test_x_matrix = self.data_group.test_x_matrix
         if test_x_matrix is None:
             return False
         start_time = time.time()
-        pred_y_prob = self.cnn_session.run(self.predict_y_proba, feed_dict={self.train_x_place: test_x_matrix, self.dropout_place: 1.0, self.is_train_place: False})
+        eval_value = self.cnn_session.run(eval_method_value, feed_dict={self.train_x_place: test_x_matrix, self.dropout_place: 1.0, self.is_train_place: False})
         test_run_time = time.time() - start_time
-        return pred_y_prob, test_run_time
+        return eval_value, test_run_time
 
 
 def conf_act(input_conv, activation_fun=0, logger=None):
@@ -618,11 +618,11 @@ def conv_configure(train_x_placeholder, cnn_setting, num_classes, logger=None):
 
     batch_num, f_num, a_num, c_num = last_conv_out.get_shape().as_list()
     logger.info("Conv output" + str(last_conv_out.get_shape()))
-    if f_num > 100:
-        pool_row = f_num/100
-        pool_col = 1
-        last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
-        logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
+    #if f_num > 100:
+    #    pool_row = f_num/100
+    #    pool_col = 1
+    #    last_conv_out = conf_pool_layer(last_conv_out, pool_row, pool_col, False)
+    #    logger.info("Conv shuffle output" + str(last_conv_out.get_shape()))
     if attention_type == 0:
         logger.info("Attention applied")
         logger.info("input shape: " + str(last_conv_out.get_shape()))
@@ -733,9 +733,9 @@ def load_model_predict(cnn_session, test_x_matrix, logits_out,train_x_placeholde
 def run_cnn(cnn_setting, data_group, saver_prefix="./", logger=None):
     cnn_model = cnn_model_class(data_group, cnn_setting, logger)
     cnn_model.saver_file = cnn_setting.out_model_folder + saver_prefix
-    train_run_time = cnn_model.cnn_train_main()
-    pred_y_prob, test_run_time = cnn_model.cnn_pred_main()
-    return pred_y_prob, train_run_time, test_run_time, cnn_model
+    train_run_time, eval_method_value = cnn_model.cnn_train_main()
+    eval_value, test_run_time = cnn_model.cnn_pred_main(eval_method_value)
+    return eval_value, train_run_time, test_run_time, cnn_model
 
 def main_test():
     train_ins = 500

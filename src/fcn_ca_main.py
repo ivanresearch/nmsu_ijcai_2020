@@ -44,7 +44,7 @@ def cnn_classification_main(parameter_file, file_keyword, attention_type, functi
     conv_num = len(cnn_setting.conv_kernel_list)
     cnn_setting.out_obj_folder = out_obj_folder
     cnn_setting.out_model_folder = out_model_folder
-    #cnn_setting.attention_type = 0      # 0: apply ra then sa attentions
+    #cnn_setting.attention_type = 0     # 0: apply ra then sa attentions
                                         # -1: No attentions
     #cnn_setting.attention_type = -1
     #cnn_setting.attention_type = 1  # Using the global attention mechnizm
