@@ -24,7 +24,7 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 # This is a multi-class classification using CNN model. Using Accuracy instead of F1 as measurement
 # Just classification, no need to store the output objects
-def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_classification"):
+def cnn_classification_main(parameter_file, file_keyword, attention_type, function_keyword="fcn_classification"):
     data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file = read_all_feature_classification(parameter_file, function_keyword)
 
     print(data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file)
@@ -44,12 +44,13 @@ def cnn_classification_main(parameter_file, file_keyword, function_keyword="fcn_
     conv_num = len(cnn_setting.conv_kernel_list)
     cnn_setting.out_obj_folder = out_obj_folder
     cnn_setting.out_model_folder = out_model_folder
-    cnn_setting.attention_type = 0      # 0: apply ra then sa attentions
+    #cnn_setting.attention_type = 0      # 0: apply ra then sa attentions
                                         # -1: No attentions
     #cnn_setting.attention_type = -1
     #cnn_setting.attention_type = 1  # Using the global attention mechnizm
     #cnn_setting.attention_type = 2  # Using the input attention from https://arxiv.org/pdf/1704.02971.pdf
-    #cnn_setting.attention_type = 3  # Using the input attention from https://arxiv.org/pdf/1704.02971.pdf
+    
+    cnn_setting.attention_type = attention_type
     cnn_setting.cross_entropy_type = -1   # 0: apply the class-based cross-entropy
                                           # -1: apply the normal cross-entropy
     #cnn_setting.cross_entropy_type = 0
