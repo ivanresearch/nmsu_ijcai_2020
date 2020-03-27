@@ -21,7 +21,7 @@ from utils.classification_results import class_based_accuracy
 class cnn_model_class:
     data_group = None
 
-    learning_rate = -1
+    learning_rate = 4e-4
     train_x_place = None
     #Here the train_y_place and all other y related places are matrix
     train_y_place = None
@@ -45,11 +45,11 @@ class cnn_model_class:
         self.cnn_setting = cnn_setting
         self.logger = logger
         self.data_stru = data_group.gene_data_stru()
+        if cnn_setting.learning_rate > 0:
+            self.learning_rate = cnn_setting.learning_rate
         #gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.9)
         #self.config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=True, gpu_options=gpu_options)
         self.config = tf.ConfigProto(allow_soft_placement=True)
-        if self.learning_rate < 0:
-            self.learning_rate = 4e-4
         #self.config.gpu_options.allow_growth = True
 
     def cnn_graph_setup(self, data_stru, cnn_setting, input_map=1):
