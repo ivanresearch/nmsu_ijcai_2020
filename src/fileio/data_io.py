@@ -2,8 +2,8 @@ import os
 from os.path import isfile, join, isdir
 import numpy as np
 import openpyxl
-from data_processing import train_test_transpose
-from data_processing import data_collection
+from .data_processing import train_test_transpose
+from .data_processing import data_collection
 
 ################################################################
 #File IO
