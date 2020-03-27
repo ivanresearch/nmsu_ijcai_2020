@@ -362,7 +362,7 @@ def read_cnn_varying_classification_parameter(parameter_file):
 def read_all_feature_classification(parameter_file, function_keyword="all_feature_classification"):
     lines = open(parameter_file).readlines()
     split_key = '/'
-    keyword_list = ['#data_keyword', '#data_folder', '#attr_num', '#attr_len', '#num_classes', '#start_class', '#class_column', '#method', '#class_id', '#log_folder', '#obj_folder', '#cnn_setting_file']
+    keyword_list = ['#data_keyword', '#data_folder', '#attr_num', '#attr_len', '#num_classes', '#start_class', '#class_column', '#method', '#class_id', '#log_folder', '#obj_folder', '#cnn_setting_file', "#learning"]
 
     keyword = ''
     data_keyword = ''
@@ -373,6 +373,7 @@ def read_all_feature_classification(parameter_file, function_keyword="all_featur
     num_classes = -1
     start_class = -1
     class_column = -1
+    learning_rate = -1
     method = ''
     log_folder = ''
     obj_folder = ''
@@ -410,29 +411,32 @@ def read_all_feature_classification(parameter_file, function_keyword="all_featur
             obj_folder = line.strip()
         elif keyword =='#cnn_setting_file':
             cnn_setting_file = line.strip()
-
+        elif keyword == "#learning":
+            learning_rate = float(line.strip())
+    if learning_rate <= 0:
+        learning_rate = 4e-4
     if attr_num<0 or attr_len<0 or num_classes<0 or start_class<0 or class_column<0:
         raise Exception("Wrong data paramters, please check the parameter file " + parameter_file)
 
     if method == 'cnn' or method == 'fcn':
         if check_file_exists(cnn_setting_file) == False:
             raise Exception("Missing cnn setting parameter file: " + cnn_setting_file)
-    
+
     log_folder = log_folder.replace('KEYWORD', data_keyword)
     obj_folder = obj_folder.replace('KEYWORD', data_keyword)
 
     if not log_folder.endswith(split_key):
         log_folder = log_folder + split_key
     log_folder = log_folder + function_keyword + split_key
-    
+
     if not obj_folder.endswith(split_key):
         obj_folder = obj_folder + split_key
     obj_folder = obj_folder + function_keyword + split_key
-    
+
     out_obj_folder = obj_folder + method + "_obj_folder"
     out_model_folder = obj_folder + method + "_model_folder"
-        
-    return data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file
+
+    return data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file, learning_rate
 
 
 # The function is used to read the input method key file

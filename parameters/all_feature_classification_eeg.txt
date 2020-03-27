@@ -27,3 +27,5 @@ cnn
 ../object/KEYWORD/
 #cnn_setting_file
 ../parameters/cnn_model_parameter.txt
+#learning
+4e-06

@@ -120,11 +120,9 @@ if __name__ == '__main__':
     #data_file = '../../data/arc/train_test_10_fold/test_0.txt'
     #data_file = '../../data/fixed_arc/train_test_1_fold/test_0.txt'
     data_key = "phs"
-    data_key = "jav"
+    data_key = "eeg"
     #data_key = "fad"
-    data_file = "../../data/iwb/raw/test_raw.txt"
-    data_file = "../../data/asd/raw/train_raw.txt"
-    data_file = "../../data/" + data_key +"/raw/train_0.txt"
+    data_file = "../../data/" + data_key +"/train.txt"
     class_column = 0
     delimiter = ' '
     #data_plot(data_file, class_column, delimiter)

@@ -25,9 +25,9 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 # This is a multi-class classification using CNN model. Using Accuracy instead of F1 as measurement
 # Just classification, no need to store the output objects
 def cnn_classification_main(parameter_file, file_keyword, attention_type, function_keyword="fcn_classification"):
-    data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file = read_all_feature_classification(parameter_file, function_keyword)
+    data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file, learning_rate = read_all_feature_classification(parameter_file, function_keyword)
 
-    print(data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file)
+    print(data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file, learning_rate)
 
     log_folder = init_folder(log_folder)
     out_obj_folder = init_folder(out_obj_folder)
@@ -44,6 +44,7 @@ def cnn_classification_main(parameter_file, file_keyword, attention_type, functi
     conv_num = len(cnn_setting.conv_kernel_list)
     cnn_setting.out_obj_folder = out_obj_folder
     cnn_setting.out_model_folder = out_model_folder
+    cnn_setting.learning_rate = learning_rate
     #cnn_setting.attention_type = 0     # 0: apply ra then sa attentions
                                         # -1: No attentions
     #cnn_setting.attention_type = -1
