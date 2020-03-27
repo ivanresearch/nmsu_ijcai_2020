@@ -27,7 +27,7 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 def cnn_classification_main(parameter_file, file_keyword, attention_type, function_keyword="fcn_classification"):
     data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file, learning_rate = read_all_feature_classification(parameter_file, function_keyword)
 
-    print(data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file, learning_rate)
+    print(data_keyword, data_folder, attr_num, attr_len, num_classes, start_class, class_column, class_id, obj_folder, method, log_folder, out_obj_folder, out_model_folder, cnn_setting_file)
 
     log_folder = init_folder(log_folder)
     out_obj_folder = init_folder(out_obj_folder)

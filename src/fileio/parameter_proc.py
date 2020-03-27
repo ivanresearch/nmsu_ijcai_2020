@@ -413,8 +413,7 @@ def read_all_feature_classification(parameter_file, function_keyword="all_featur
             cnn_setting_file = line.strip()
         elif keyword == "#learning":
             learning_rate = float(line.strip())
-    if learning_rate <= 0:
-        learning_rate = 4e-4
+            
     if attr_num<0 or attr_len<0 or num_classes<0 or start_class<0 or class_column<0:
         raise Exception("Wrong data paramters, please check the parameter file " + parameter_file)
 
